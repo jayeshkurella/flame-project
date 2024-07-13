@@ -3,6 +3,9 @@ pipeline {
 
     environment {
         // Add any necessary environment variables here
+        PYTHON_ENV = 'production'
+        VIRTUALENV_PATH = 'venv'
+        REQUIREMENTS_FILE = 'requirements.txt'
     }
 
     stages {
