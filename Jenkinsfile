@@ -19,7 +19,7 @@ pipeline {
         stage('Set up Python Environment') {
             steps {
                 // Set up a Python virtual environment
-                sh 'python3 -m venv venv'
+                sh ' sudo apt python3 -m venv venv'
                 sh '. venv/bin/activate'
             }
         }
