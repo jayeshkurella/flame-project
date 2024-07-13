@@ -52,18 +52,18 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Clean up the workspace
-            cleanWs()
-        }
-        success {
-            // Notify success
-            echo 'Deployment succeeded!'
-        }
-        failure {
-            // Notify failure
-            echo 'Deployment failed!'
-        }
-    }
+    // post {
+    //     always {
+    //         // Clean up the workspace
+    //         cleanWs()
+    //     }
+    //     success {
+    //         // Notify success
+    //         echo 'Deployment succeeded!'
+    //     }
+    //     failure {
+    //         // Notify failure
+    //         echo 'Deployment failed!'
+    //     }
+    // }
 }
