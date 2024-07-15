@@ -43,14 +43,14 @@ pipeline {
         stage('Run Migrations') {
             steps {
                 // Run Django migrations
-                sh '. venv/bin/activate && python flame/manage.py migrate'
+                sh '. venv/bin/activate && python flames/manage.py migrate'
             }
         }
 
         stage('Run Tests') {
             steps {
                 // Run Django tests
-                sh '. venv/bin/activate && python flame/manage.py test'
+                sh '. venv/bin/activate && python flames/manage.py test'
             }
         }
 
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 // Add deployment steps here
                 // For example, copying files to the server, restarting services, etc.
-                sh '. venv/bin/activate && python flame/manage.py collectstatic --noinput'
+                sh '. venv/bin/activate && python flames/manage.py collectstatic --noinput'
                 // Add other deployment steps specific to your environment
             }
         }
