@@ -58,7 +58,7 @@ pipeline {
             steps {
                 // Add deployment steps here
                 // For example, copying files to the server, restarting services, etc.
-                sh '. venv/bin/activate && python flames/manage.py collectstatic --noinput'
+                sh '. venv/bin/activate && python flames/manage.py runserver 0.0.0.0:9000'
                 // Add other deployment steps specific to your environment
             }
         }
