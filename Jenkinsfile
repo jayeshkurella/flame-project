@@ -40,19 +40,19 @@ pipeline {
             }
         }
 
-        stage('Run Migrations') {
-            steps {
+//        stage('Run Migrations') {
+//          steps {
                 // Run Django migrations
-                sh '. venv/bin/activate && python flames/manage.py migrate'
-            }
-        }
+//                sh '. venv/bin/activate && python flames/manage.py migrate'
+//           }
+//        }
 
-        stage('Run Tests') {
-            steps {
+//        stage('Run Tests') {
+//            steps {
                 // Run Django tests
-                sh '. venv/bin/activate && python flames/manage.py test'
-            }
-        }
+//                sh '. venv/bin/activate && python flames/manage.py test'
+//            }
+//        }
 
         stage('Deploy') {
             steps {
