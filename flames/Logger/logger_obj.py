@@ -27,7 +27,7 @@ class Logger:
         log_folder = os.path.join(this_folder, "user_log_files")
         if not os.path.exists(log_folder):
             print("Creating log folder", log_folder)
-            os.mkdir(log_folder)
+            os.mkdirs(log_folder)
 
     @staticmethod
     def _setup_logger(name, log_file, level=logging.INFO):
