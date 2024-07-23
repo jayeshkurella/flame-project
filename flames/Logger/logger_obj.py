@@ -15,19 +15,20 @@ class Logger:
                                              level=logging.DEBUG)
 
     @classmethod
-    def create_logs_directory(cls):
-        this_file = __file__
-        print(f"This File.. {this_file}")
-        this_folder = os.path.split(this_file)[0]
+     @staticmethod
+    def create_logs_directory():
+        this_folder = os.path.dirname(__file__)
 
-        log_folder = os.path.join(this_folder, "dev_log_files")
-        if not os.path.exists(log_folder):
-            print("Creating log folder", log_folder)
-            os.mkdir(log_folder)
-        log_folder = os.path.join(this_folder, "user_log_files")
-        if not os.path.exists(log_folder):
-            print("Creating log folder", log_folder)
-            os.mkdirs(log_folder)
+        user_log_folder = os.path.join(this_folder, "Logger/user_log_files")
+        dev_log_folder = os.path.join(this_folder, "Logger/dev_log_files")
+
+        if not os.path.exists(user_log_folder):
+            print(f"Creating log folder: {user_log_folder}")
+            os.makedirs(user_log_folder)
+
+        if not os.path.exists(dev_log_folder):
+            print(f"Creating log folder: {dev_log_folder}")
+            os.makedirs(dev_log_folder)
 
     @staticmethod
     def _setup_logger(name, log_file, level=logging.INFO):
