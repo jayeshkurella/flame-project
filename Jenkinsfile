@@ -29,8 +29,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // Install the project dependencies
-                sh '. venv/bin/activate && pip install -r requirements.txt'
+                sh '. venv/bin/activate && pip install -r requirements.txt || { echo "Failed to install dependencies"; exit 1; }'
             }
         }
 
