@@ -9,8 +9,8 @@ class Logger:
     def __init__(self):
         try:
             self.create_logs_directory()
-            log_file = os.path.join("Logger/user_log_files", f"log_{date}.log")
-            dev_log_file = os.path.join("Logger/dev_log_files", f"devlog_{date}.log")
+            log_file = os.path.join("/var/lib/jenkins/workspace/FLAME_master/flames/Logger/user_log_files", f"log_{date}.log")
+            dev_log_file = os.path.join("/var/lib/jenkins/workspace/FLAME_master/flames/Logger/dev_log_files", f"devlog_{date}.log")
             self.logger = self._setup_logger('SMART_logger', log_file, level=logging.INFO)
             self.dev_logger = self._setup_logger('SMARTdev_logger', dev_log_file, level=logging.DEBUG)
         except Exception as e:
