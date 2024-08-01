@@ -38,6 +38,15 @@ pipeline {
             }
         }
 
+        stage('Install Missing Packages') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                pip show django-cors-headers || pip install django-cors-headers
+                '''
+            }
+        }
+
         stage('Verify Dependencies') {
             steps {
                 sh '''
