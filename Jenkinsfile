@@ -33,6 +33,7 @@ pipeline {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
                 pip install -r ${REQUIREMENTS_FILE} || { echo "Failed to install dependencies"; exit 1; }
+                pip list
                 '''
             }
         }
@@ -41,6 +42,9 @@ pipeline {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
+                python -m pip show django-environ
+                python -m pip show environ
+                python -c "import environ; print(environ)"
                 python flames/manage.py migrate
                 '''
             }
