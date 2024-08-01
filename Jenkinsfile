@@ -44,6 +44,7 @@ pipeline {
                 . ${VIRTUALENV_PATH}/bin/activate
                 pip show django-cors-headers || pip install django-cors-headers
                 pip show django-sslserver || pip install django-sslserver
+                pip show shapely || pip install shapely
                 '''
             }
         }
@@ -55,6 +56,7 @@ pipeline {
                 pip show django-environ
                 pip show django-cors-headers
                 pip show django-sslserver
+                pip show shapely
                 '''
             }
         }
