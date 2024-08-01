@@ -38,13 +38,20 @@ pipeline {
             }
         }
 
+        stage('Verify Installation') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                pip install django-environ
+                pip show django-environ
+                '''
+            }
+        }
+
         stage('Run Migrations') {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                python -m pip show django-environ
-                python -m pip show environ
-                python -c "import environ; print(environ)"
                 python flames/manage.py migrate
                 '''
             }
