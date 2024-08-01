@@ -46,6 +46,7 @@ pipeline {
                 pip show django-sslserver || pip install django-sslserver
                 pip show shapely || pip install shapely
                 pip show pystac || pip install pystac
+                pip show rasterio || pip install rasterio
                 '''
             }
         }
@@ -59,6 +60,7 @@ pipeline {
                 pip show django-sslserver
                 pip show shapely
                 pip show pystac
+                pip show rasterio
                 '''
             }
         }
