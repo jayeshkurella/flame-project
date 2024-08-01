@@ -38,12 +38,12 @@ pipeline {
             }
         }
 
-        stage('Verify Installation') {
+        stage('Verify Dependencies') {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                pip install django-environ
                 pip show django-environ
+                pip show django-cors-headers
                 '''
             }
         }
