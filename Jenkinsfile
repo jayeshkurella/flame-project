@@ -43,6 +43,7 @@ pipeline {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
                 pip show django-cors-headers || pip install django-cors-headers
+                pip show django-sslserver || pip install django-sslserver
                 '''
             }
         }
@@ -53,6 +54,7 @@ pipeline {
                 . ${VIRTUALENV_PATH}/bin/activate
                 pip show django-environ
                 pip show django-cors-headers
+                pip show django-sslserver
                 '''
             }
         }
