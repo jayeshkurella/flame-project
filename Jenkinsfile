@@ -83,11 +83,11 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+         stage('Deploy') {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                nohup python flames/manage.py runserver 0.0.0.0:9000 &
+                python flames/manage.py runserver 0.0.0.0:9000
                 '''
             }
         }
