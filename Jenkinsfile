@@ -106,5 +106,5 @@ post {
         failure {
             // Notify failure
             echo 'Deployment failed!'
-    }
+        }
 }
