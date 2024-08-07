@@ -69,7 +69,7 @@ pipeline {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                python flames/manage.py migrate
+                python3 flames/manage.py migrate
                 '''
             }
         }
@@ -78,7 +78,7 @@ pipeline {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                python flames/manage.py test
+                python3 flames/manage.py test
                 '''
             }
         }
@@ -87,7 +87,7 @@ pipeline {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                python flames/manage.py runserver 0.0.0.0:9000
+                python3 flames/manage.py runserver 0.0.0.0:9000
                 '''
             }
         }
