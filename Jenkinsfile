@@ -1,6 +1,4 @@
-node {
-    try {
-        pipeline {
+pipeline {
     agent any
 
     environment {
@@ -21,9 +19,7 @@ node {
             steps {
                 sh '''
                 sudo apt-get update
-                sudo apt-get install -y python3-venv
-                sudo apt-get install -y libpq-dev
-                sudo apt-get install -y build-essential
+                sudo apt-get install -y python3-venv libpq-dev build-essential
                 python3 -m venv ${VIRTUALENV_PATH}
                 . ${VIRTUALENV_PATH}/bin/activate && pip install --upgrade pip
                 '''
@@ -85,7 +81,7 @@ node {
             }
         }
 
-         stage('Deploy') {
+        stage('Deploy') {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
@@ -94,9 +90,8 @@ node {
             }
         }
     }
-}
 
-post {
+    post {
         always {
             // Clean up the workspace
             cleanWs()
@@ -109,6 +104,5 @@ post {
             // Notify failure
             echo 'Deployment failed!'
         }
-     }
-   }    
-}        
+    }
+}
