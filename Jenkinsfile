@@ -1,4 +1,6 @@
-pipeline {
+node {
+    try {
+        pipeline {
     agent any
 
     environment {
