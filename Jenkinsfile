@@ -30,8 +30,8 @@ pipeline {
             steps {
                 sh '''
                 . ${VIRTUALENV_PATH}/bin/activate
-                pip install -r ${REQUIREMENTS_FILE} || { echo "Failed to install dependencies"; exit 1; }
-                pip list
+                pip install -r ${REQUIREMENTS_FILE}
+                pip show django-environ
                 '''
             }
         }
