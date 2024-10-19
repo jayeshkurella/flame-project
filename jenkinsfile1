@@ -1,39 +1,100 @@
-#!/bin/bash
+pipeline {
+    agent any
 
-# Variables
-REPO_URL="https://github.com/jayeshkurella/flame-project.git"
-VIRTUALENV_PATH="venv"
-REQUIREMENTS_FILE="requirements.txt"
-DJANGO_SETTINGS_MODULE="flames.settings"
+    environment {
+        REPO_URL = "https://github.com/jayeshkurella/flame-project.git"
+        VIRTUALENV_PATH = "venv"
+        REQUIREMENTS_FILE = "requirements.txt"
+        DJANGO_SETTINGS_MODULE = "flames.settings"
+    }
 
-# Checkout code
-git clone $REPO_URL
+    stages {
+        stage('Checkout') {
+            steps {
+                git "${REPO_URL}"
+            }
+        }
 
-# Set up Python environment
-sudo apt-get update
-sudo apt-get install -y python3-venv libpq-dev build-essential
-python3 -m venv $VIRTUALENV_PATH
-source $VIRTUALENV_PATH/bin/activate && pip install --upgrade pip
+        stage('Set up Python Environment') {
+            steps {
+                sh '''
+                sudo apt-get update
+                sudo apt-get install -y python3-venv libpq-dev build-essential
+                python3 -m venv ${VIRTUALENV_PATH}
+                . ${VIRTUALENV_PATH}/bin/activate && pip install --upgrade pip
+                '''
+            }
+        }
 
-# Install dependencies
-pip install -r $REQUIREMENTS_FILE || { echo "Failed to install dependencies"; exit 1; }
-pip list
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                pip install -r ${REQUIREMENTS_FILE} || { echo "Failed to install dependencies"; exit 1; }
+                pip list
+                '''
+            }
+        }
 
-# Install missing packages
-for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
-    pip show $package || pip install $package
-done
+        stage('Install Missing Packages') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
+                    pip show $package || pip install $package
+                done
+                '''
+            }
+        }
 
-# Verify dependencies
-for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
-    pip show $package
-done
+        stage('Verify Dependencies') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
+                    pip show $package
+                done
+                '''
+            }
+        }
 
-# Run migrations
-python3 flames/manage.py migrate
+        stage('Run Migrations') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                python3 flames/manage.py migrate
+                '''
+            }
+        }
 
-# Run tests
-python3 flames/manage.py test
+        stage('Run Tests') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                python3 flames/manage.py test
+                '''
+            }
+        }
 
-# Deploy the Django server
-nohup python3 flames/manage.py runserver 0.0.0.0:9000 &
+        stage('Deploy') {
+            steps {
+                sh '''
+                . ${VIRTUALENV_PATH}/bin/activate
+                nohup python3 flames/manage.py runserver 0.0.0.0:9000 &
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo 'Deployment succeeded!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}
