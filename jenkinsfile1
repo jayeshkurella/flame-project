@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Variables
+REPO_URL="https://github.com/jayeshkurella/flame-project.git"
+VIRTUALENV_PATH="venv"
+REQUIREMENTS_FILE="requirements.txt"
+DJANGO_SETTINGS_MODULE="flames.settings"
+
+# Checkout code
+git clone $REPO_URL
+
+# Set up Python environment
+sudo apt-get update
+sudo apt-get install -y python3-venv libpq-dev build-essential
+python3 -m venv $VIRTUALENV_PATH
+source $VIRTUALENV_PATH/bin/activate && pip install --upgrade pip
+
+# Install dependencies
+pip install -r $REQUIREMENTS_FILE || { echo "Failed to install dependencies"; exit 1; }
+pip list
+
+# Install missing packages
+for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
+    pip show $package || pip install $package
+done
+
+# Verify dependencies
+for package in django-cors-headers django-environ django-sslserver shapely pystac rasterio; do
+    pip show $package
+done
+
+# Run migrations
+python3 flames/manage.py migrate
+
+# Run tests
+python3 flames/manage.py test
+
+# Deploy the Django server
+nohup python3 flames/manage.py runserver 0.0.0.0:9000 &
